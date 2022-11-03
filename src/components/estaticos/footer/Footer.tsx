@@ -16,25 +16,23 @@ function Footer() {
               <Typography variant="h5" align="center" gutterBottom style={{ color: "white" }}>Siga-nos nas redes sociais </Typography>
             </Box>
             <Box display="flex" alignItems="center" justifyContent="center">
-              <a href="https://www.facebook.com/generationbrasil" target="_blank">
+              <a href="https://www.facebook.com/daniela.rocha.391420" target="_blank">
                 <FacebookIcon style={{ fontSize: 60, color: "white" }} />
               </a>
-              <a href="https://www.instagram.com/generationbrasil/" target="_blank">
+              <a href="https://www.instagram.com/daniela_oliver.rocha//" target="_blank">
                 <InstagramIcon style={{ fontSize: 60, color: "white" }} />
               </a>
-              <a href="https://www.linkedin.com/school/generationbrasil/" target="_blank">
+              <a href="https://www.linkedin.com/in/daniela-rocha-a6337932/" target="_blank">
                 <LinkedInIcon style={{ fontSize: 60, color: "white" }} />
               </a>
             </Box>
           </Box>
           <Box style={{ backgroundColor: "#FFB6C1", height: "60px" }}>
             <Box paddingTop={1}>
-              <Typography variant="subtitle2" align="center" gutterBottom style={{ color: "white" }} >© 2020 Copyright:</Typography>
+              <Typography variant="subtitle2" align="center" gutterBottom style={{ color: "white" }} >© 2022 Copyright:</Typography>
             </Box>
             <Box>
-              <a target="_blank" href="https://brasil.generation.org">
-                <Typography variant="subtitle2" gutterBottom style={{ color: "white" }} align="center">brasil.generation.org</Typography>
-              </a>
+                <Typography variant="subtitle2" gutterBottom style={{ color: "white" }} align="center">Daniela Rocha</Typography>
             </Box>
           </Box>
         </Grid>
