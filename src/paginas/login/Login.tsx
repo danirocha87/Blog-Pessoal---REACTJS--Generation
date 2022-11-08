@@ -1,11 +1,15 @@
-import React , {useState,useEffect,ChangeEvent} from 'react'
-import { Grid, Typography, Button, TextField } from '@material-ui/core';
-import { Box } from '@mui/material'
+import React, { useState, useEffect, ChangeEvent } from 'react';
+import { Grid,Typography, TextField, Button } from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
 import useLocalStorage from 'react-use-localstorage';
-import { api } from '../../services/Service';
+import { login } from '../../services/Service';
 import UserLogin from '../../models/UserLogin';
+import { Box } from '@mui/material'
 import './Login.css';
+
+
+
+
 
 
 function Login() {
@@ -37,8 +41,7 @@ function Login() {
         async function onSubmit(e: ChangeEvent<HTMLFormElement>){
             e.preventDefault();
             try{
-                const resposta = await api.post(`/usuarios/logar`, userLogin)
-                setToken(resposta.data.token)
+                await login(`/usuarios/logar`, userLogin, setToken)
 
                 alert('Usuário logado com sucesso!');
             }catch(error){
