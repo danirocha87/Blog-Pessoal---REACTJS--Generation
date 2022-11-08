@@ -5,6 +5,8 @@ import Footer from './components/estaticos/footer/Footer';
 import Home from './paginas/home/Home';
 import './App.css';
 import Login from './paginas/login/Login';
+import CadastroUsuario from './paginas/cadastroUsuario/CadastroUsuario';
+
 
 
 function App() {
@@ -12,21 +14,16 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <div style={{minHeight: '100vh'}}> /* aqui eu coloco o tamanho que vai ocupar na minha tela*/
-          <Route path="/"> /* aqui é para caso o usuario acesse exatamente a barra vai direcionar para o login*/
-            <Login />
-          </Route>
 
-          <Route path="/home">
-            <Home />
-          </Route>
+        <Route path="/" element={<Login  />} />
 
-          <Route path="/login">/* aqui é para caso o usuario acesse a barra de login vai direcionar*/
-            <Login />
-          </Route>
-        </div>
+        <Route path="/home" element={<Home />} />
+
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/cadastrousuario" element={<CadastroUsuario />} />
+
       </Routes>
-      
       <Footer />
     </Router>
 
