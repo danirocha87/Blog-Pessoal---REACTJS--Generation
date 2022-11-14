@@ -1,8 +1,15 @@
+.Navbar{
+  display: flex;
+  justify-content: space-between;
+  background:#ffcbdb!important;
+  opacity: 0.5;
+  ;
+}
+
 .cursor{
   cursor: pointer;
   color: white;
 }
-
 
 .text-decorator-none{
   text-decoration: none;
