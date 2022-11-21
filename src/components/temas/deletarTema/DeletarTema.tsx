@@ -1,37 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import {Card, CardActions, CardContent, Button, Typography} from '@material-ui/core';
+import {Box, Card, CardActions, CardContent, Button, Typography} from '@material-ui/core';
 import './DeletarTema.css';
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 import { buscaId, deleteId } from '../../../services/Service';
 import Tema from '../../../models/Tema';
-import { Box } from '@mui/material'
 import { useSelector } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokensReducer';
-import { toast } from 'react-toastify';
 
 
 function DeletarTema() {
-  const newLocal = useHistory();
-  let history= newLocal;
+  let navigate = useNavigate();
   const { id } = useParams<{id: string}>();
   const token = useSelector<TokenState, TokenState["tokens"]>(
     (state) => state.tokens
-);
+  );
   const [tema, setTema] = useState<Tema>()
 
   useEffect(() => {
       if (token == "") {
-        toast.error('Você precisa estar logado!',{
-          position:'top-right',
-          autoClose:2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          theme: "colored",
-          progress: undefined,        
-      });
-          history.push("/login")
+          alert("Você precisa estar logado")
+          navigate("/login")
   
       }
   }, [token])
@@ -43,7 +31,8 @@ function DeletarTema() {
   }, [id])
 
   async function findById(id: string) {
-      buscaId(`/tema/${id}`, setTema, {
+    // aqui no async function eu falo que essa função é assincrona então preciso colocar o await na frnete do put e post para o back ente espere e não de erro
+     await buscaId(`/temas/${id}`, setTema, {
           headers: {
             'Authorization': token
           }
@@ -51,59 +40,51 @@ function DeletarTema() {
       }
 
       function sim() {
-          history.push('/temas')
-          deleteId(`/tema/${id}`, {
+        navigate('/temas')
+          deleteId(`/temas/${id}`, {
             headers: {
               'Authorization': token
             }
           });
-          toast.success('Tema deletado com sucesso !',{
-            position:'top-right',
-            autoClose:2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            theme: "colored",
-            progress: undefined,        
-        });
+          alert('Tema deletado com sucesso');
         }
       
         function nao() {
-          history.push('/temas')
+          navigate('/temas')
         }
         
-return (
-  <>
-    <Box m={2}>
-      <Card variant="outlined">
-        <CardContent>
-          <Box justifyContent="center">
-            <Typography color="textSecondary" gutterBottom>
-              Deseja deletar o Tema:
-            </Typography>
-            <Typography color="textSecondary">
-              {tema?.descricao}
-            </Typography>
-          </Box>
-        </CardContent>
-        <CardActions>
-          <Box display="flex" justifyContent="start" ml={1.0} mb={2} >
-            <Box mx={2}>
-              <Button onClick={sim} variant="contained" className="marginLeft" size='large' color="primary">
-                Sim
-              </Button>
+          
+  return (
+    <>
+      <Box m={2}>
+        <Card variant="outlined">
+          <CardContent>
+            <Box justifyContent="center">
+              <Typography color="textSecondary" gutterBottom>
+                Deseja deletar Tema?
+              </Typography>
+              <Typography color="textSecondary">
+                {tema?.descricao}
+              </Typography>
             </Box>
-            <Box mx={2}>
-              <Button  onClick={nao} variant="contained" size='large' color="secondary">
-                Não
-              </Button>
+          </CardContent>
+          <CardActions>
+            <Box display="flex" justifyContent="start" ml={1.0} mb={2} >
+              <Box mx={2}>
+                <Button onClick={sim} variant="contained" className="marginLeft" size='large' color="primary">
+                  Sim
+                </Button>
+              </Box>
+              <Box mx={2}>
+                <Button  onClick={nao} variant="contained" size='large' color="secondary">
+                  Não
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        </CardActions>
-      </Card>
-    </Box>
-  </>
-);
+          </CardActions>
+        </Card>
+      </Box>
+    </>
+  );
 }
 export default DeletarTema;

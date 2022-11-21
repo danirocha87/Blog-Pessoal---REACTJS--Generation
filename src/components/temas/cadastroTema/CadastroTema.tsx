@@ -1,16 +1,17 @@
-
 import React, { useState, useEffect, ChangeEvent } from 'react'
 import { Container, Typography, TextField, Button } from "@material-ui/core"
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom'
 import './CadastroTema.css';
+import useLocalStorage from 'react-use-localstorage';
 import Tema from '../../../models/Tema';
 import { buscaId, post, put } from '../../../services/Service';
 import { useSelector } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokensReducer';
-import { toast } from 'react-toastify';
+
+
 
 function CadastroTema() {
-    let history = useHistory();
+    let navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
     const token = useSelector<TokenState, TokenState["tokens"]>(
         (state) => state.tokens
@@ -22,17 +23,8 @@ function CadastroTema() {
 
     useEffect(() => {
         if (token == "") {
-            toast.error('Você precisa estar logado!', {
-                position: 'top-right',
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: false,
-                theme: "colored",
-                progress: undefined,
-            });
-            history.push("/login")
+            alert("Você precisa estar logado")
+            navigate("/login")
 
         }
     }, [token])
@@ -43,8 +35,9 @@ function CadastroTema() {
         }
     }, [id])
 
-    async function findById(id: string) {
-        buscaId(`/tema/${id}`, setTema, {
+    async function findById(id: string) { 
+        // aqui no async function eu falo que essa função é assincrona então preciso colocar o await na frnete do put e post para o back ente espere e não de erro
+        buscaId(`/temas/${id}`, setTema, {
             headers: {
                 'Authorization': token
             }
@@ -62,56 +55,40 @@ function CadastroTema() {
 
     async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
         e.preventDefault()
-        console.log("tema " + JSON.stringify(tema))
+        console.log("tema" + JSON.stringify(tema))
 
         if (id !== undefined) {
             console.log(tema)
-            put(`/tema`, tema, setTema, {
+            // aqui no async function eu falo que essa função é assincrona então preciso colocar o await na frnete do put e post para o back ente espere e não de erro
+            await put(`/temas`, tema, setTema, {
                 headers: {
                     'Authorization': token
                 }
             })
-            toast.success('Tema atualizado com sucesso !', {
-                position: 'top-right',
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: false,
-                theme: "colored",
-                progress: undefined,
-            });
+            alert('Tema atualizado com sucesso');
         } else {
-            post(`/tema`, tema, setTema, {
+            // aqui no async function eu falo que essa função é assincrona então preciso colocar o await na frnete do put e post para o back ente espere e não de erro
+            await post(`/temas`, tema, setTema, {
                 headers: {
                     'Authorization': token
                 }
             })
-            toast.success('Tema cadastrado com sucesso !', {
-                position: 'top-right',
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: false,
-                theme: "colored",
-                progress: undefined,
-            });
+            alert('Tema cadastrado com sucesso');
         }
         back()
 
     }
 
     function back() {
-        history.push('/temas')
+        navigate('/temas')
     }
 
     return (
         <Container maxWidth="sm" className="topo">
             <form onSubmit={onSubmit}>
-                <Typography variant="h3" color="textSecondary" component="h1" align="center" >Formulário de cadastro tema</Typography>
-                <TextField value={tema.descricao} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedTema(e)} id="descricao" label="descricao" variant="outlined" name="descricao" margin="normal" fullWidth />
-                <Button type="submit" variant="contained" color="primary">
+                <Typography variant="h3" component="h1" align="center" className='titulo1' >Formulário de cadastro tema</Typography>
+                <TextField value={tema.descricao} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedTema(e)} id="descricao" label="descricao" variant="outlined" name="descricao" margin="normal" className='descricao' fullWidth />
+                <Button type="submit" variant="contained" className='botao'>
                     Finalizar
                 </Button>
             </form>

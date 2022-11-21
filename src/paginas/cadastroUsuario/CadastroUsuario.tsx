@@ -1,46 +1,41 @@
-import React , {useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import User from '../../models/User';
 import { cadastroUsuario } from '../../services/Service';
-import { Grid,Typography, Button, TextField } from '@material-ui/core';
+import { Grid, Box, Typography, Button, TextField } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { Box } from '@mui/material'
 import './CadastroUsuario.css';
-import { toast } from 'react-toastify';
-
-
-
-
 
 function CadastroUsuario() {
-
     let navigate = useNavigate();
-    const [confirmarSenha,setConfirmarSenha] = useState<String>("")
+    const [confirmarSenha, setConfirmarSenha] = useState<String>("") //verifica se o valor que o usuario digitou no confirmar senha é igual ao campo senha
     const [user, setUser] = useState<User>(
         {
             id: 0,
             nome: '',
             usuario: '',
-            senha: ''
+            senha: '',
+            foto: ''
         })
 
-    const [userResult, setUserResult] = useState<User>(
+    const [userResult, setUserResult] = useState<User>( //armazena os valores do retorno da API - JSON com usuário cadastrado
         {
             id: 0,
             nome: '',
             usuario: '',
-            senha: ''
+            senha: '',
+            foto: ''
         })
 
     useEffect(() => {
-        if (userResult.id != 0) {
+        if (userResult.id != 0) { //verifica se o id é diferente de 0 e direciona para a página de login
             navigate("/login")
         }
     }, [userResult])
 
 
-    function confirmarSenhaHandle(e: ChangeEvent<HTMLInputElement>){
-        setConfirmarSenha(e.target.value)
+    function confirmarSenhaHandle(e: ChangeEvent<HTMLInputElement>) { // captura o valor do campo confirmar senha e armazena no status de confirmar senha
+        setConfirmarSenha(e.target.value) // será comparado com a senha na funçao onSubmit
     }
 
 
@@ -54,29 +49,11 @@ function CadastroUsuario() {
     }
     async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
         e.preventDefault()
-        if(confirmarSenha == user.senha){
-        cadastroUsuario(`/usuarios/cadastrar`, user, setUserResult)
-        toast.success('Usuario cadastrado com sucesso !',{
-            position:'top-right',
-            autoClose:2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            theme: "colored",
-            progress: undefined,        
-        });
-        }else{
-            toast.error('Dados inconsistentes. Favor verificar as informações de cadastro.', {
-                position: "top-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: false,
-                theme: "colored",
-                progress: undefined,
-                });
+        if (confirmarSenha == user.senha) { //verifica se o confirmar senha é igual a senha
+            cadastroUsuario(`/usuarios/cadastrar`, user, setUserResult)
+            alert('Usuario cadastrado com sucesso')
+        } else {
+            alert('Dados inconsistentes. Favor verificar as informações de cadastro.')
         }
     }
     return (
@@ -85,27 +62,22 @@ function CadastroUsuario() {
             <Grid item xs={6} alignItems='center'>
                 <Box paddingX={10}>
                     <form onSubmit={onSubmit}>
-                        <Typography variant='h3' gutterBottom color='textPrimary' component='h3' align='center' className='textos2'>Cadastrar</Typography>
-                        <TextField value={user.nome} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='nome' label='nome' variant='outlined' name='nome' margin='normal' fullWidth />
-                        <TextField value={user.usuario} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)}id='usuario' label='usuario' variant='outlined' name='usuario' margin='normal'fullWidth />
-                        <TextField value={user.senha} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)}id='senha' label='senha' variant='outlined' name='senha' margin='normal' type='password' fullWidth />
-                        <TextField value={confirmarSenha} onChange={(e: ChangeEvent<HTMLInputElement>) => confirmarSenhaHandle(e)}id='confirmarSenha' label='confirmarSenha' variant='outlined' name='confirmarSenha' margin='normal' type='password' fullWidth />
-                        <Box marginTop={2} textAlign='center'>
-                            <Link to='/login' className='text-decorator-none'>
-                                <Button variant='contained' color='secondary' className='btnCancelar'>
-                                    Cancelar
-                                </Button>
+                        <Typography variant='h3' component='h3' align='center' className='texto'>Cadastrar</Typography>
+                        <TextField value={user.nome} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='nome' label='Nome' name='nome' margin='normal' fullWidth />
+                        <TextField value={user.usuario} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='usuario' label='Usuário' name='usuario' margin='normal' fullWidth />
+                        <TextField value={user.senha} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='senha' label='senha' name='senha' margin='normal' type='password' fullWidth />
+                        <TextField value={confirmarSenha} onChange={(e: ChangeEvent<HTMLInputElement>) => confirmarSenhaHandle(e)} id='confirmarSenha' label='Confirmar Senha' name='confirmarSenha' type='password' margin='normal' fullWidth />
+                        <Box marginTop={5} textAlign='center'>
+
+                            <Button type='submit' variant='contained' className='botao'>Cadastrar</Button>
+                            <Link to='/login' className='text-decoration-none'>
+                                <Button variant='contained' className='botaoCancelar'>Cancelar</Button>
                             </Link>
-                            <Button type='submit' variant='contained' color='primary'>
-                                    Cadastrar
-                            </Button>
                         </Box>
                     </form>
                 </Box>
+
             </Grid>
-
-
-
         </Grid>
     );
 }

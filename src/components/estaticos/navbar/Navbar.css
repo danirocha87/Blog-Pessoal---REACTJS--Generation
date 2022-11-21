@@ -1,16 +1,29 @@
-.Navbar{
-  display: flex;
-  justify-content: space-between;
-  background:#ffcbdb!important;
-  opacity: 0.5;
-  ;
+
+.cursor{ 
+cursor:pointer; 
+color:#fff; 
+font-size: 50px !important;
+} 
+.cursor:hover{ 
+    color:#d81e8b!important; 
+} 
+.text-decoration-none{ 
+text-decoration: none!important; 
+    color: #fff; 
+} 
+.MuiAppBar-colorPrimary{ 
+background: #ffcbdb
+!important 
+} 
+.MuiTypography-h6{ 
+font-family:  'Red Hat Display', sans-serif!important; 
+font-weight: 700!important; 
+gap: 20!important; 
+} 
+.nomeBlog{ 
+font-family: 'Red Hat Display', sans-serif!important;
+font-weight: 900!important;  
+font-size: 50px; 
 }
 
-.cursor{
-  cursor: pointer;
-  color: white;
-}
 
-.text-decorator-none{
-  text-decoration: none;
-}

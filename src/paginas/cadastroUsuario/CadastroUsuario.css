@@ -1,15 +1,19 @@
 .imagem2{
-  background-image: url(https://i.imgur.com/XOIrcHA.jpg);
-    background-repeat: no-repeat;
-    width:100vh; 
-    min-height: 100vh; 
+    background-image: url(https://i.imgur.com/XOIrcHA.jpg);
+    min-height: 100vh!important;
     background-size: cover;
     background-position: center;
 }
-.textos2{
-  font-weight: bold !important;
+.botaoCancelar{
+    background: #ffcbdb;
+    background: linear-gradient(0deg, #ffcbdb 0%, #ffcbdb 100%);
+    border: 2px solid #fff!important;
+    color: #fff!important;
+    font-weight:bold!important;
+    margin-left: 1rem!important;
 }
-
-.btnCancelar{
-  margin-right: 20px !important;
+.botaoCancelar:hover{
+    background: rgb(3,3,3);
+    background: linear-gradient(40deg, #ffcbdb 3%, #ffcbdb 58%, #ffcbdb 100%);
+    color: rgb(3,3,3) !important;
 }
